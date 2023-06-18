@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../model/pontosTuristicos.dart';
 import 'detalhe_ponto.dart';
 import 'filtro_page.dart';
-import 'form_new_point.dart';
+import 'novo_ponto.dart';
 
 class ListaPontosTuristicos extends StatefulWidget {
   @override
@@ -65,15 +65,10 @@ class _ListaPontosTuristicos extends State<ListaPontosTuristicos> {
     return Scaffold(
       appBar: _criarAppBar(),
       body: _criarBody(),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton.extended(
-            onPressed: _abrirForm,
-            label: Text('Novo Ponto'),
-            icon: Icon(Icons.add)
-          ),
-        ],
+      floatingActionButton: FloatingActionButton(
+        tooltip: 'Nova Tarefa',
+        child: Icon(Icons.add),
+        onPressed: _abrirForm,
       ),
     );
   }
@@ -249,6 +244,7 @@ class _ListaPontosTuristicos extends State<ListaPontosTuristicos> {
               children: [
                 Text('Data de Inclusão - ${pontoAtual.dataInclusaoFormatado}'),
                 Text('Diferenciais - ${pontoAtual.diferencial}'),
+                Text('Cep - ${pontoAtual.cep}'),
                 Text('Latitude - ${pontoAtual.latitude}'),
                 Text('Longitude - ${pontoAtual.longitude}'),
               ],

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -122,7 +121,7 @@ class _DetalhePontoState extends State<DetalhePonto> {
                 children: [
                   ElevatedButton.icon(
                     icon: const Icon(
-                      Icons.route,
+                      Icons.list,
                       color: Colors.white,
                       size: 20,
                     ),
@@ -176,48 +175,50 @@ class _DetalhePontoState extends State<DetalhePonto> {
         },
       );
     } else {
-      showModalBottomSheet(
+      showDialog(
         context: context,
         builder: (BuildContext context) {
-          return Container(
-            child: Column(
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: mapa.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      String atributo = mapa.keys.elementAt(index);
-                      dynamic valor = mapa.values.elementAt(index);
+          return Dialog(
+            child: Container(
+              width: double.infinity,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: mapa.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        String atributo = mapa.keys.elementAt(index);
+                        dynamic valor = mapa.values.elementAt(index);
 
-                      return ListTile(
-                        title: Text('$atributo: $valor'),
-                      );
-                    },
+                        return ListTile(
+                          title: Text('$atributo: $valor'),
+                        );
+                      },
+                    ),
                   ),
-                ),
-                Container(
-                  width: double.infinity,
-                  color: Colors.purple,
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      'Fechar',
-                      style: TextStyle(
-                        color: Colors.white,
+                  Container(
+                    width: double.infinity,
+                    color: Colors.blue,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        'Fechar',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },
       );
     }
   }
-
 
   Future<void> _mostrarMensagemDialog(String mensagem) async{
     await showDialog(
@@ -305,34 +306,12 @@ class _DetalhePontoState extends State<DetalhePonto> {
   }
 
   void _obterCepDetalhado() async {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return Dialog(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CircularProgressIndicator(),
-                SizedBox(height: 16.0),
-                Text('Consultando CEP...'),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-
     try {
       var lista = await _service.findCep(widget.pontoTuristico.cep);
 
-      Navigator.of(context).pop(); // Fechar o diálogo de progresso
-
       exibirModal(context, lista);
     } catch (erro) {
-      Navigator.of(context).pop(); // Fechar o diálogo de progresso
+      Navigator.of(context).pop();
 
       debugPrint(erro.toString());
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Ocorreu o erro: ${erro.toString()} ')));

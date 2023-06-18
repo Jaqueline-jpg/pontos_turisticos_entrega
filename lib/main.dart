@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pontos_turisticos/pages/filtro_page.dart';
-import 'package:pontos_turisticos/pages/lista_pontos_turisticos.dart';
+import 'package:pontos_turisticos/pages/lista_pontos.dart';
 
 void main() {
   runApp(const AppGerenciadorPontosTuristicos());
@@ -16,7 +16,7 @@ class AppGerenciadorPontosTuristicos extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
 
-        primarySwatch: Colors.purple,
+        primarySwatch: Colors.blue,
       ),
       home: ListaPontosTuristicos(),
       routes: {
