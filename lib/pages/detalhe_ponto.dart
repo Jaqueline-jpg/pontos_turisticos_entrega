@@ -21,10 +21,6 @@ class _DetalhePontoState extends State<DetalhePonto> {
   Position? _localizacaoAtual;
   var _distancia;
   final _service = CepService();
-  final _cepFormater = MaskTextInputFormatter(
-      mask: '#####-###',
-      filter: {'#' : RegExp(r'[0-9]')}
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -161,8 +157,8 @@ class _DetalhePontoState extends State<DetalhePonto> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Erro ao buscar informações'),
-            content: Text('O CEP informado não existe. Verifique o cadastro do ponto e atualize as informações'),
+            title: Text('ATENÇÃO'),
+            content: Text('O CEP informado não foi encontrado. Verifique as informações do cadastro'),
             actions: [
               TextButton(
                 onPressed: () {
